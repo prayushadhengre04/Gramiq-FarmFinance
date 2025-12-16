@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farm Finance Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: a4 portrait;
+            margin: 0.8cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        /* HEADER SECTION */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .header-text h1 {
+            color: #28a745;
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .header-text .subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .header-text .meta {
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* FARMER DETAILS SECTION */
+        .farmer-details {
+            background-color: #f0f8ff;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+        }
+
+        .farmer-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .farmer-details td {
+            padding: 5px 10px;
+            font-size: 11px;
+        }
+
+        .farmer-details .label {
+            font-weight: bold;
+            color: #28a745;
+            width: 40%;
+        }
+
+        /* FINANCE SUMMARY SECTION */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            font-size: 15px;
+            color: white;
+            background-color: #28a745;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border-radius: 3px;
+        }
+
+        /* ENHANCED SUMMARY GRID */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            transition: all 0.3s ease;
+        }
+
+        .summary-box:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #28a745;
+        }
+
+        .summary-box.income {
+            border-left: 5px solid #28a745;
+        }
+
+        .summary-box.expense {
+            border-left: 5px solid #dc3545;
+        }
+
+        .summary-box.profit {
+            border-left: 5px solid #ffc107;
+        }
+
+        .summary-box .icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .summary-box .label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-box .value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .summary-box .subtext {
+            font-size: 9px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .summary-box.income .value {
+            color: #28a745;
+        }
+
+        .summary-box.expense .value {
+            color: #dc3545;
+        }
+
+        .summary-box.profit .value {
+            color: #ffc107;
+        }
+
+        .summary-box.profit-loss.positive .value {
+            color: #28a745;
+        }
+
+        .summary-box.profit-loss.negative .value {
+            color: #dc3545;
+        }
+
+        .summary-box.cost .value {
+            color: #007bff;
+        }
+
+        /* CHART SECTION */
+        .chart-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* TABLES */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 11px;
+        }
+
+        table.data-table th {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table.data-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table.data-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .amount-right {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .amount-positive {
+            color: #28a745;
+        }
+
+        .amount-negative {
+            color: #dc3545;
+        }
+
+        /* NO DATA MESSAGE */
+        .no-data {
+            padding: 15px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+            margin-top: 25px;
+            padding-top: 12px;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER WITH LOGO -->
+<div class="header">
+    {% if logo_data %}
+        <img src="data:image/png;base64,{{ logo_data }}" alt="GramIQ Logo" class="logo">
+    {% endif %}
+    <div class="header-text">
+        <h1>GramIQ Farm Finance Report</h1>
+        <div class="subtitle">{{ report.crop_name }} | {{ report.total_acres }} Acres | {{ report.season }} Season</div>
+        <div class="meta">
+            Generated: {{ generated_at }} | Farmer: <strong>{{ report.farmer_name }}</strong>
+        </div>
+    </div>
+</div>
+
+<!-- FARMER DETAILS --><!-- FARMER DETAILS -->
+<div class="farmer-details" style="border-left: none;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <!-- Row 1 -->
+            <td class="label" style="width: 15%; padding: 6px 0; color: #28a745; font-weight: bold;">Location:</td>
+            <td style="width: 35%; padding: 6px 0;">{{ report.location }}</td>
+
+            <td class="label" style="width: 15%; padding: 6px 0; color: #28a745; font-weight: bold; padding-left: 20px;">Sowing Date:</td>
+            <td style="width: 35%; padding: 6px 0;">{{ report.date_of_sowing|date:"d-m-Y" }}</td>
+        </tr>
+        <tr>
+            <!-- Row 2 -->
+            <td class="label" style="width: 15%; padding: 6px 0; color: #28a745; font-weight: bold;">Harvest Date:</td>
+            <td style="width: 35%; padding: 6px 0;">{{ report.date_of_harvest|date:"d-m-Y" }}</td>
+
+            <td class="label" style="width: 15%; padding: 6px 0; color: #28a745; font-weight: bold; padding-left: 20px;">Total Acres:</td>
+            <td style="width: 35%; padding: 6px 0;"><strong>{{ report.total_acres }}</strong></td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- SECTION 1: ENHANCED FINANCE SUMMARY -->
+<div class="section">
+    <h2>💰 Finance Summary</h2>
+
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; border: 1px solid #ddd;">
+
+        <!-- Total Income Row -->
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ccc;">
+            <div style="font-weight: bold; color: #666;">
+                📈 Total Income
+                <span style="font-weight: normal; font-size: 11px; color: #999; margin-left: 5px;">(From all sources)</span>
+            </div>
+            <div style="font-weight: bold; color: #28a745; font-size: 16px;">
+                ₹ {{ total_income|floatformat:0 }}
+            </div>
+        </div>
+
+        <!-- Total Expense Row -->
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ccc;">
+            <div style="font-weight: bold; color: #666;">
+                📉 Total Expense
+                <span style="font-weight: normal; font-size: 11px; color: #999; margin-left: 5px;">(All expenses incurred)</span>
+            </div>
+            <div style="font-weight: bold; color: #dc3545; font-size: 16px;">
+                ₹ {{ total_expense|floatformat:0 }}
+            </div>
+        </div>
+
+        <!-- Profit / Loss Row -->
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #ccc;">
+            <div style="font-weight: bold; color: #666;">
+                {% if profit_loss >= 0 %}✓ Profit{% else %}✗ Loss{% endif %}
+                <span style="font-weight: normal; font-size: 11px; color: #999; margin-left: 5px;">(Income - Expense)</span>
+            </div>
+            <div style="font-weight: bold; font-size: 16px; {% if profit_loss >= 0 %}color: #28a745;{% else %}color: #dc3545;{% endif %}">
+                ₹ {{ profit_loss|floatformat:0 }}
+            </div>
+        </div>
+
+        <!-- Cost per Acre Row -->
+        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+            <div style="font-weight: bold; color: #666;">
+                🌾 Cost per Acre
+                <span style="font-weight: normal; font-size: 11px; color: #999; margin-left: 5px;">(Total Expense / Total Acres)</span>
+            </div>
+            <div style="font-weight: bold; color: #007bff; font-size: 16px;">
+                ₹ {{ cost_per_acre|floatformat:2 }}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-container">
+        <img src="{{ chart_image }}" alt="Finance Overview Chart">
+    </div>
+</div>
+
+
+<!-- SECTION 2: EXPENSE BREAKDOWN -->
+<div class="section">
+    <h2>📋 Expense Breakdown</h2>
+
+    {% if expenses %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.category }}</td>
+                        <td class="amount-right amount-negative">₹ {{ expense.amount|floatformat:0 }}</td>
+                        <td>{{ expense.date|date:"d-m-Y" }}</td>
+                        <td>{{ expense.description|default:"-" }}</td>
+                    </tr>
+                {% endfor %}
+                <tr style="background-color: #f0f0f0; font-weight: bold;">
+                    <td colspan="1">TOTAL EXPENSE</td>
+                    <td class="amount-right amount-negative">₹ {{ total_expense|floatformat:0 }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">No expenses recorded</div>
+    {% endif %}
+</div>
+
+<!-- SECTION 3: INCOME BREAKDOWN -->
+<div class="section">
+    <h2>💵 Income Breakdown</h2>
+
+    {% if incomes %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for income in incomes %}
+                    <tr>
+                        <td>{{ income.category }}</td>
+                        <td class="amount-right amount-positive">₹ {{ income.amount|floatformat:0 }}</td>
+                        <td>{{ income.date|date:"d-m-Y" }}</td>
+                        <td>{{ income.description|default:"-" }}</td>
+                    </tr>
+                {% endfor %}
+                <tr style="background-color: #f0f0f0; font-weight: bold;">
+                    <td colspan="1">TOTAL INCOME</td>
+                    <td class="amount-right amount-positive">₹ {{ total_income|floatformat:0 }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">No income recorded</div>
+    {% endif %}
+</div>
+
+<!-- SECTION 4: LEDGER -->
+<div class="section">
+    <h2>📊 Ledger (Transaction History)</h2>
+
+    {% if ledger %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Particulars</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in ledger %}
+                    <tr>
+                        <td>{{ entry.date|date:"d-m-Y" }}</td>
+                        <td>{{ entry.particulars }}</td>
+                        <td>
+                            <span style="font-weight: bold; {% if entry.type == 'Income' %}color: #28a745;{% else %}color: #dc3545;{% endif %}">
+                                {{ entry.type }}
+                            </span>
+                        </td>
+                        <td>{{ entry.description|default:"-" }}</td>
+                        <td class="amount-right {% if entry.type == 'Income' %}amount-positive{% else %}amount-negative{% endif %}">
+                            {% if entry.type == 'Income' %}+ {% else %}- {% endif %}₹ {{ entry.amount|floatformat:0 }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">No transactions recorded</div>
+    {% endif %}
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    Proudly maintained accounting with GramIQ
+</div>
+
+</body>
+</html>

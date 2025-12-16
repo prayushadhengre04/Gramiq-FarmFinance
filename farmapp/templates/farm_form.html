@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Finance Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .formset-row { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .dynamic-form { margin-bottom: 15px; }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h3>GramIQ Farm Finance Report</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Farmer & Crop Details -->
+                <h4 class="mb-3">Farmer and Crop Details</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form.farmer_name.label_tag }} {{ form.farmer_name }}</div>
+                    <div class="col-md-6">{{ form.crop_name.label_tag }} {{ form.crop_name }}</div>
+                    <div class="col-md-6">{{ form.season.label_tag }} {{ form.season }}</div>
+                    <div class="col-md-6">{{ form.total_acres.label_tag }} {{ form.total_acres }}</div>
+
+                    <div class="col-md-6">{{ form.date_of_sowing.label_tag }} {{ form.date_of_sowing }}</div>
+                    <div class="col-md-6">{{ form.date_of_harvest.label_tag }} {{ form.date_of_harvest }}</div>
+                    <div class="col-12">{{ form.location.label_tag }} {{ form.location }}</div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Expense Details -->
+                <h4 class="mb-3">Expense Details</h4>
+                {{ expense_formset.management_form }}
+                <div id="expense-list">
+                    {% for form in expense_formset %}
+                        <div class="row g-2 formset-row expense-row">
+                            {{ form.id }}
+                            <div class="col-md-3">{{ form.category }}</div>
+                            <div class="col-md-3">{{ form.amount }}</div>
+                            <div class="col-md-3">{{ form.date }}</div>
+                            <div class="col-md-3">{{ form.description }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-expense" class="btn btn-outline-secondary btn-sm mt-2">+ Add Expense Row</button>
+
+                <hr class="my-4">
+
+                <!-- Income Details -->
+                <h4 class="mb-3">Income Details</h4>
+                {{ income_formset.management_form }}
+                <div id="income-list">
+                    {% for form in income_formset %}
+                        <div class="row g-2 formset-row income-row">
+                            {{ form.id }}
+                            <div class="col-md-3">{{ form.category }}</div>
+                            <div class="col-md-3">{{ form.amount }}</div>
+                            <div class="col-md-3">{{ form.date }}</div>
+                            <div class="col-md-3">{{ form.description }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-income" class="btn btn-outline-secondary btn-sm mt-2">+ Add Income Row</button>
+
+                <div class="mt-5 text-center">
+                    <button type="submit" class="btn btn-success btn-lg px-5">Generate Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addForm(prefix, containerId) {
+        const totalForms = document.getElementById(`id_${prefix}-TOTAL_FORMS`);
+        const count = parseInt(totalForms.value);
+        const container = document.getElementById(containerId);
+        const newRow = container.firstElementChild.cloneNode(true);
+
+        newRow.querySelectorAll('input').forEach(input => {
+            input.name = input.name.replace(`-${0}-`, `-${count}-`);
+            input.id = input.id.replace(`-${0}-`, `-${count}-`);
+            input.value = '';
+        });
+
+        container.appendChild(newRow);
+        totalForms.value = count + 1;
+    }
+
+    document.getElementById('add-expense').addEventListener('click', () => addForm('expenses', 'expense-list'));
+    document.getElementById('add-income').addEventListener('click', () => addForm('incomes', 'income-list'));
+</script>
+
+</body>
+</html>
