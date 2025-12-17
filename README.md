@@ -6,3 +6,5 @@ https://drive.google.com/file/d/1q88WXAlcG6hoCwTeIB2zFGkIv-_6j2M_/view?usp=shari
 [HOW TO RUN APPLICATION.pdf](https://github.com/user-attachments/files/24211672/HOW.TO.RUN.APPLICATION.pdf)
 
 [LIBRARY USED.pdf](https://github.com/user-attachments/files/24211670/LIBRARY.USED.pdf)
+
+Exmaple (generated pdf): [farm_report_26.pdf](https://github.com/user-attachments/files/24211847/farm_report_26.pdf)
