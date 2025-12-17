@@ -40,142 +40,35 @@
         }
 
         .header-text h1 {
-            color: #28a745;
+            color: black;
             font-size: 22px;
             margin-bottom: 3px;
         }
 
         .header-text .subtitle {
-            font-size: 13px;
+            font-size: 18px;
             color: #666;
             margin-bottom: 2px;
+            font-weight: bold;
         }
 
         .header-text .meta {
-            font-size: 10px;
-            color: #999;
-        }
-
-        /* FARMER DETAILS SECTION */
-        .farmer-details {
-            background-color: #f0f8ff;
-            border-left: 4px solid #28a745;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 3px;
-        }
-
-        .farmer-details table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .farmer-details td {
-            padding: 5px 10px;
-            font-size: 11px;
-        }
-
-        .farmer-details .label {
             font-weight: bold;
-            color: #28a745;
-            width: 40%;
+            font-size: 14px;
+            color: black;
         }
 
-        /* FINANCE SUMMARY SECTION */
+        /* SECTIONS */
         .section {
             margin-bottom: 20px;
         }
 
         .section h2 {
             font-size: 15px;
-            color: white;
-            background-color: #28a745;
+            font-weight: 900;
             padding: 10px 12px;
             margin-bottom: 12px;
             border-radius: 3px;
-        }
-
-        /* ENHANCED SUMMARY GRID */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .summary-box {
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            padding: 15px;
-            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-            transition: all 0.3s ease;
-        }
-
-        .summary-box:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-color: #28a745;
-        }
-
-        .summary-box.income {
-            border-left: 5px solid #28a745;
-        }
-
-        .summary-box.expense {
-            border-left: 5px solid #dc3545;
-        }
-
-        .summary-box.profit {
-            border-left: 5px solid #ffc107;
-        }
-
-        .summary-box .icon {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .summary-box .label {
-            font-size: 11px;
-            color: #666;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .summary-box .value {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .summary-box .subtext {
-            font-size: 9px;
-            color: #999;
-            margin-top: 3px;
-        }
-
-        .summary-box.income .value {
-            color: #28a745;
-        }
-
-        .summary-box.expense .value {
-            color: #dc3545;
-        }
-
-        .summary-box.profit .value {
-            color: #ffc107;
-        }
-
-        .summary-box.profit-loss.positive .value {
-            color: #28a745;
-        }
-
-        .summary-box.profit-loss.negative .value {
-            color: #dc3545;
-        }
-
-        .summary-box.cost .value {
-            color: #007bff;
         }
 
         /* CHART SECTION */
@@ -204,7 +97,7 @@
         table.data-table th {
             background-color: #28a745;
             color: white;
-            padding: 10px;
+            padding: 5px;
             text-align: left;
             font-weight: bold;
         }
@@ -250,6 +143,15 @@
             padding-top: 12px;
             border-top: 2px solid #ddd;
         }
+
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #000;
+            margin: 1em 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -268,6 +170,7 @@
     </div>
 </div>
 
+<hr/>
 <!-- FARMER DETAILS --><!-- FARMER DETAILS -->
 <div class="farmer-details" style="border-left: none;">
     <table style="width: 100%; border-collapse: collapse;">
@@ -290,6 +193,7 @@
     </table>
 </div>
 
+<hr/>
 
 <!-- SECTION 1: ENHANCED FINANCE SUMMARY -->
 <div class="section">
@@ -350,6 +254,7 @@
 </div>
 
 
+
 <!-- SECTION 2: EXPENSE BREAKDOWN -->
 <div class="section">
     <h2>📋 Expense Breakdown</h2>
@@ -385,6 +290,8 @@
     {% endif %}
 </div>
 
+
+
 <!-- SECTION 3: INCOME BREAKDOWN -->
 <div class="section">
     <h2>💵 Income Breakdown</h2>
@@ -419,6 +326,8 @@
         <div class="no-data">No income recorded</div>
     {% endif %}
 </div>
+
+
 
 <!-- SECTION 4: LEDGER -->
 <div class="section">
